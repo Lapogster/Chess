@@ -1,37 +1,62 @@
 #include <raylib.h>
+#include "pieces.h"
+#include "boardRender.h"
+
+#define WINDOW_H 800
+#define WINDOW_V 800
 
 int main(void){
 
     // Initialise App
-    InitWindow(800, 800, "Game Window");
+    InitWindow(WINDOW_H, WINDOW_V, "Chess");
+
+    piece_t boardState[NUM_TILES][NUM_TILES] = {0};
+
+    texture_t textures[NUM_PIECES + 1] = {0};
+
+    colour_t turn = White;
 
     // Load Textures
     Texture2D dark_tile = LoadTexture("assets/textures/Dark_Tile.png");
+
     Texture2D white_pawn = LoadTexture("assets/textures/White_Pawn.png");
     Texture2D black_pawn = LoadTexture("assets/textures/Black_Pawn.png");
+    textures[Pawn].whiteSprite = white_pawn;
+    textures[Pawn].blackSprite = black_pawn;
+
+    // Spawning Board
+    boardState[0][6] = (piece_t){Pawn, White, FALSE};
+    boardState[1][6] = (piece_t){Pawn, White, FALSE};
+    boardState[2][6] = (piece_t){Pawn, White, FALSE};
+    boardState[3][6] = (piece_t){Pawn, White, FALSE};
+    boardState[4][6] = (piece_t){Pawn, White, FALSE};
+    boardState[5][6] = (piece_t){Pawn, White, FALSE};
+    boardState[6][6] = (piece_t){Pawn, White, FALSE};
+    boardState[7][6] = (piece_t){Pawn, White, FALSE};
+
+    boardState[0][1] = (piece_t){Pawn, Black, FALSE};
+    boardState[1][1] = (piece_t){Pawn, Black, FALSE};
+    boardState[2][1] = (piece_t){Pawn, Black, FALSE};
+    boardState[3][1] = (piece_t){Pawn, Black, FALSE};
+    boardState[4][1] = (piece_t){Pawn, Black, FALSE};
+    boardState[5][1] = (piece_t){Pawn, Black, FALSE};
+    boardState[6][1] = (piece_t){Pawn, Black, FALSE};
+    boardState[7][1] = (piece_t){Pawn, Black, FALSE};
 
     // Run App
     // Game Loop
-    int i;
-    int j;
     while (!WindowShouldClose()){
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(LIGHTGRAY);
 
         // Draw Board
-        for (i = 0; i < 8; i++){
-            for (j = 0; j < 4; j++){
-                if (i % 2 != 0){
-                    DrawTexture(dark_tile, i*100.0, j*200.0, RAYWHITE);
-                }
-                else{
-                    DrawTexture(dark_tile, i*100.0, 100.0 + j*200.0, RAYWHITE);
-                }
+        DrawBoard(&dark_tile);
 
-                
-            }
-        }
+        DrawPieces(boardState, textures);
+
+        if (turn == White) SetWindowTitle("Chess - White turn");
+        else SetWindowTitle("Chess - Black turn");
 
         EndDrawing();
     }
