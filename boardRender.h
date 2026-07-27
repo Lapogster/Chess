@@ -1,3 +1,5 @@
+// Functions used for rendering
+
 #ifndef BOARDRENDER_H
 #define BOARDRENDER_H
 

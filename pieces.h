@@ -1,3 +1,5 @@
+// Definitions of structs and enums, all definitions for use across the program
+
 #ifndef PIECES_H
 #define PIECES_H
 
@@ -5,6 +7,8 @@
 
 #define FALSE 0
 #define TRUE 1
+
+#define NOT_VALID -1
 
 #define TILE_SIZE 100.0
 #define NUM_TILES 8
@@ -31,11 +35,19 @@ typedef struct{
     piece_type_t type;
     colour_t colour;
     int selected;
+    int clicked;
 } piece_t;
 
 typedef struct{
     Texture2D blackSprite;
     Texture2D whiteSprite;
 } texture_t;
+
+typedef struct{
+    int x;
+    int y;
+} coords_t;
+
+#define GLOW     CLITERAL(Color){ 253, 249, 0, 100 }
 
 #endif

@@ -17,14 +17,21 @@ void DrawBoard(Texture2D* dark_tile){
 }
 
 void DrawPieces(piece_t (*boardState)[NUM_TILES], texture_t *textures){
+    Color renderTint;
     for (int i = 0; i < NUM_TILES; i++){
         for (int j = 0; j < NUM_TILES; j++){
             if (boardState[i][j].type != None){
+                if (boardState[i][j].selected) {
+                    renderTint = GLOW;
+                }
+                else{
+                    renderTint = RAYWHITE;
+                }
                 if (boardState[i][j].colour == White){
-                    DrawTexture(textures[boardState[i][j].type].whiteSprite, i*TILE_SIZE, j*TILE_SIZE, RAYWHITE);
+                    DrawTexture(textures[boardState[i][j].type].whiteSprite, i*TILE_SIZE, j*TILE_SIZE, renderTint);
                 }
                 else if (boardState[i][j].colour == Black){
-                    DrawTexture(textures[boardState[i][j].type].blackSprite, i*TILE_SIZE, j*TILE_SIZE, RAYWHITE);
+                    DrawTexture(textures[boardState[i][j].type].blackSprite, i*TILE_SIZE, j*TILE_SIZE, renderTint);
                 }
             }
         }
