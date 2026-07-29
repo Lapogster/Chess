@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include "pieces.h"
 
-coords_t getPlayerInput(colour_t turn){
+input_return_t getPlayerInput(colour_t turn){
     coords_t currentTile = {NOT_VALID, NOT_VALID};
 
     Vector2 mousePos = GetMousePosition();
@@ -15,5 +15,12 @@ coords_t getPlayerInput(colour_t turn){
         currentTile.y = y;
     }
 
-    return currentTile;
+    input_return_t input = {0};
+    input.currentTile = currentTile;
+
+    if (((x >= 0 && x < NUM_TILES) && (y >= 0 && y < NUM_TILES)) && IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+        input.click = TRUE;
+    }
+
+    return input;
 }

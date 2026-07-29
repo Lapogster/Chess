@@ -14,7 +14,7 @@
 #define NUM_TILES 8
 #define NUM_PIECES 6
 
-typedef enum {
+typedef enum Type {
     None,
     Pawn,
     King,
@@ -24,7 +24,9 @@ typedef enum {
     Knight
 } piece_type_t;
 
-typedef enum {
+int static piece_value[NUM_PIECES + 1] = {0,1,0,9,3,5,3};
+
+typedef enum Colour {
     No_colour,
     White,
     Black
@@ -36,6 +38,7 @@ typedef struct{
     colour_t colour;
     int selected;
     int clicked;
+    int valid;
 } piece_t;
 
 typedef struct{
@@ -48,6 +51,12 @@ typedef struct{
     int y;
 } coords_t;
 
+typedef struct{
+    coords_t currentTile;
+    int click;
+} input_return_t;
+
 #define GLOW     CLITERAL(Color){ 253, 249, 0, 100 }
+#define VALID     CLITERAL(Color){ 253, 255, 0, 80 }
 
 #endif

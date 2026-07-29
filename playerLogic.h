@@ -5,6 +5,6 @@
 
 #include "pieces.h"
 
-coords_t getPlayerInput(colour_t turn);
+input_return_t getPlayerInput(colour_t turn);
 
 #endif
