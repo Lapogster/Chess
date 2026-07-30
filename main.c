@@ -58,6 +58,8 @@ int main(void){
     boardState[3][5] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
     boardState[5][2] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
 
+    int thisTurnEP = FALSE;
+
     // Run App
     // Game Loop
     while (!WindowShouldClose()){
@@ -82,6 +84,8 @@ int main(void){
             }
             else if (frameInput.click){
                 if  (boardState[currentTile.x][currentTile.y].valid == TRUE){
+                    if (boardState[currentTile.x][currentTile.y].enPessantAble) thisTurnEP = TRUE;
+
                     ClearEnPassant(boardState);
                     
                     if ((boardState[lastClick.x][lastClick.y].type == Pawn) && coordsAbs(lastClick, currentTile).yDiff == 2){
@@ -94,6 +98,17 @@ int main(void){
                     }
 
                     MovePiece(lastClick, currentTile, boardState);
+
+                    if (thisTurnEP){
+                        if (boardState[currentTile.x][currentTile.y].colour == White){
+                            boardState[currentTile.x][currentTile.y + 1].type = None;
+                        }
+                        else if (boardState[currentTile.x][currentTile.y].colour == Black) {
+                            boardState[currentTile.x][currentTile.y - 1].type = None;
+                        }
+                    }
+                    thisTurnEP = FALSE;
+
                     NextTurn(&turn);
                     boardState[currentTile.x][currentTile.y].selected = FALSE;
                     boardState[currentTile.x][currentTile.y].clicked = FALSE;
