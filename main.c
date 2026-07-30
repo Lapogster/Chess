@@ -116,6 +116,13 @@ void InvalidateOldMoves(piece_t (*boardState)[NUM_TILES]){
             boardState[i][j].valid = FALSE;
         }
     }
+    for (int i = 0; i < NUM_TILES; i++){
+        for (int j = 0; j < NUM_TILES; j++){
+            if(boardState[i][j].type == None){
+                boardState[i][j].colour = No_colour;
+            }
+        }
+    }
 }
 
 void NextTurn(colour_t *turn){

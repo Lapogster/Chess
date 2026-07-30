@@ -49,6 +49,14 @@ void HighlightValidMoves(piece_t piece, coords_t location, piece_t (*boardState)
                 DrawTexture(*dark_tile, location.x * TILE_SIZE, (location.y - 1) * TILE_SIZE, VALID);
                 boardState[location.x][location.y - 1].valid = TRUE;
             }
+            if (boardState[location.x - 1][location.y - 1].colour == Black){
+                DrawTexture(*dark_tile, (location.x - 1) * TILE_SIZE, (location.y - 1) * TILE_SIZE, VALID);
+                boardState[location.x - 1][location.y - 1].valid = TRUE;
+            }
+            if (boardState[location.x + 1][location.y - 1].colour == Black){
+                DrawTexture(*dark_tile, (location.x + 1) * TILE_SIZE, (location.y - 1) * TILE_SIZE, VALID);
+                boardState[location.x + 1][location.y - 1].valid = TRUE;
+            }
             if (location.y == 1) return;
             if ((boardState[location.x][location.y - 1].type == None) && (boardState[location.x][location.y - 2].type == None) && (location.y == 6)){
                 DrawTexture(*dark_tile, location.x * TILE_SIZE, (location.y - 2) * TILE_SIZE, VALID);
@@ -60,6 +68,14 @@ void HighlightValidMoves(piece_t piece, coords_t location, piece_t (*boardState)
             if (boardState[location.x][location.y + 1].type == None){
                 DrawTexture(*dark_tile, location.x * TILE_SIZE, (location.y + 1) * TILE_SIZE, VALID);
                 boardState[location.x][location.y + 1].valid = TRUE;
+            }
+            if (boardState[location.x + 1][location.y + 1].colour == White){
+                DrawTexture(*dark_tile, (location.x + 1) * TILE_SIZE, (location.y + 1) * TILE_SIZE, VALID);
+                boardState[location.x + 1][location.y + 1].valid = TRUE;
+            }
+            if (boardState[location.x - 1][location.y + 1].colour == White){
+                DrawTexture(*dark_tile, (location.x - 1) * TILE_SIZE, (location.y + 1) * TILE_SIZE, VALID);
+                boardState[location.x - 1][location.y + 1].valid = TRUE;
             }
             if (location.y == 6) return;
             if ((boardState[location.x][location.y + 1].type == None) && (boardState[location.x][location.y + 2].type == None) && (location.y == 1)){
