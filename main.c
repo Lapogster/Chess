@@ -2,6 +2,7 @@
 #include "pieces.h"
 #include "boardRender.h"
 #include "playerLogic.h"
+#include "myMath.h"
 
 #include <stdio.h>
 
@@ -10,6 +11,7 @@
 
 void InvalidateOldMoves(piece_t (*boardState)[NUM_TILES]);
 void NextTurn(colour_t *turn);
+void ClearEnPassant(piece_t (*boardState)[NUM_TILES]);
 
 int main(void){
 
@@ -35,26 +37,26 @@ int main(void){
     textures[Pawn].blackSprite = black_pawn;
 
     // Spawning Board
-    boardState[0][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
-    boardState[1][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
-    boardState[2][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
-    boardState[3][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
-    boardState[4][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
-    boardState[5][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
-    boardState[6][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
-    boardState[7][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
+    boardState[0][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[1][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[2][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[3][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[4][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[5][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[6][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[7][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
 
-    boardState[0][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
-    boardState[1][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
-    boardState[2][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
-    boardState[3][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
-    boardState[4][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
-    boardState[5][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
-    boardState[6][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
-    boardState[7][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
+    boardState[0][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[1][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[2][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[3][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[4][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[5][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[6][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[7][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
 
-    boardState[3][5] = (piece_t){Pawn, White, FALSE, FALSE, FALSE};
-    boardState[5][2] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE};
+    boardState[3][5] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[5][2] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
 
     // Run App
     // Game Loop
@@ -80,6 +82,17 @@ int main(void){
             }
             else if (frameInput.click){
                 if  (boardState[currentTile.x][currentTile.y].valid == TRUE){
+                    ClearEnPassant(boardState);
+                    
+                    if ((boardState[lastClick.x][lastClick.y].type == Pawn) && coordsAbs(lastClick, currentTile).yDiff == 2){
+                        if (turn == White){
+                            boardState[lastClick.x][lastClick.y - 1].enPessantAble = TRUE;
+                        }
+                        else{
+                            boardState[lastClick.x][lastClick.y + 1].enPessantAble = TRUE;
+                        }
+                    }
+
                     MovePiece(lastClick, currentTile, boardState);
                     NextTurn(&turn);
                     boardState[currentTile.x][currentTile.y].selected = FALSE;
@@ -131,5 +144,13 @@ void NextTurn(colour_t *turn){
     }
     else if (*turn == Black){
         *turn = White;
+    }
+}
+
+void ClearEnPassant(piece_t (*boardState)[NUM_TILES]){
+    for (int i = 0; i < NUM_TILES; i++){
+        for (int j = 0; j < NUM_TILES; j++){
+            boardState[i][j].enPessantAble = FALSE;
+        }
     }
 }

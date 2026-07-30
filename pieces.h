@@ -39,6 +39,7 @@ typedef struct{
     int selected;
     int clicked;
     int valid;
+    int enPessantAble;
 } piece_t;
 
 typedef struct{

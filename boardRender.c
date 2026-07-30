@@ -49,11 +49,17 @@ void HighlightValidMoves(piece_t piece, coords_t location, piece_t (*boardState)
                 DrawTexture(*dark_tile, location.x * TILE_SIZE, (location.y - 1) * TILE_SIZE, VALID);
                 boardState[location.x][location.y - 1].valid = TRUE;
             }
-            if (boardState[location.x - 1][location.y - 1].colour == Black){
+            if ((boardState[location.x - 1][location.y - 1].colour == Black) || boardState[location.x - 1][location.y - 1].enPessantAble){
+                if (boardState[location.x - 1][location.y - 1].enPessantAble){
+                    boardState[location.x - 1][location.y - 2].type = None;
+                }
                 DrawTexture(*dark_tile, (location.x - 1) * TILE_SIZE, (location.y - 1) * TILE_SIZE, VALID);
                 boardState[location.x - 1][location.y - 1].valid = TRUE;
             }
-            if (boardState[location.x + 1][location.y - 1].colour == Black){
+            if ((boardState[location.x + 1][location.y - 1].colour == Black) || boardState[location.x + 1][location.y - 1].enPessantAble){
+                if (boardState[location.x + 1][location.y - 1].enPessantAble){
+                    boardState[location.x + 1][location.y - 2].type = None;
+                }
                 DrawTexture(*dark_tile, (location.x + 1) * TILE_SIZE, (location.y - 1) * TILE_SIZE, VALID);
                 boardState[location.x + 1][location.y - 1].valid = TRUE;
             }
@@ -69,11 +75,17 @@ void HighlightValidMoves(piece_t piece, coords_t location, piece_t (*boardState)
                 DrawTexture(*dark_tile, location.x * TILE_SIZE, (location.y + 1) * TILE_SIZE, VALID);
                 boardState[location.x][location.y + 1].valid = TRUE;
             }
-            if (boardState[location.x + 1][location.y + 1].colour == White){
+            if ((boardState[location.x + 1][location.y + 1].colour == White) || boardState[location.x + 1][location.y + 1].enPessantAble){
+                if (boardState[location.x + 1][location.y + 1].enPessantAble){
+                    boardState[location.x + 1][location.y + 2].type = None;
+                }
                 DrawTexture(*dark_tile, (location.x + 1) * TILE_SIZE, (location.y + 1) * TILE_SIZE, VALID);
                 boardState[location.x + 1][location.y + 1].valid = TRUE;
             }
-            if (boardState[location.x - 1][location.y + 1].colour == White){
+            if ((boardState[location.x - 1][location.y + 1].colour == White) || boardState[location.x - 1][location.y + 1].enPessantAble){
+                if (boardState[location.x - 1][location.y + 1].enPessantAble){
+                    boardState[location.x - 1][location.y + 2].type = None;
+                }
                 DrawTexture(*dark_tile, (location.x - 1) * TILE_SIZE, (location.y + 1) * TILE_SIZE, VALID);
                 boardState[location.x - 1][location.y + 1].valid = TRUE;
             }
