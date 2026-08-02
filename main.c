@@ -17,6 +17,7 @@ int main(void){
 
     // Initialise App
     InitWindow(WINDOW_H, WINDOW_V, "Chess");
+    SetWindowIcon(LoadImage("assets/textures/White_Pawn.png"));
 
     piece_t boardState[NUM_TILES][NUM_TILES] = {0};
 

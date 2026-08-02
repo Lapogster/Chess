@@ -2,6 +2,9 @@
 #include <raylib.h>
 #include "pieces.h"
 
+void RookCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
+void BishopCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
+
 void DrawBoard(Texture2D* dark_tile){
     for (int i = 0; i < NUM_TILES; i++){
         for (int j = 0; j < NUM_TILES/2; j++){
@@ -92,6 +95,32 @@ void HighlightValidMoves(piece_t piece, coords_t location, piece_t (*boardState)
             }
         }
     }
+
+    // Rook Check
+    if (piece.type == Rook){
+        RookCheck(location, boardState, dark_tile);
+    }
+
+    // Bishop Check
+    if (piece.type == Bishop){
+        BishopCheck(location, boardState, dark_tile);
+    }
+
+    // Knight Check
+    if (piece.type == Knight){
+        
+    }
+
+    // Queen Check
+    if (piece.type == Queen){
+        RookCheck(location, boardState, dark_tile);
+        BishopCheck(location, boardState, dark_tile);
+    }
+
+    // King Check
+    if (piece.type == King){
+        
+    }
 }
 
 void MovePiece(coords_t initial, coords_t target, piece_t (*boardState)[NUM_TILES]){
@@ -108,4 +137,12 @@ void MovePiece(coords_t initial, coords_t target, piece_t (*boardState)[NUM_TILE
     // Make move
     boardState[target.x][target.y] = boardState[initial.x][initial.y];
     boardState[initial.x][initial.y].type = None;
+}
+
+void RookCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile){
+
+}
+
+void BishopCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile){
+
 }
