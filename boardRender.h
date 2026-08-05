@@ -12,4 +12,6 @@ void HighlightValidMoves(piece_t piece, coords_t location, piece_t (*boardState)
 
 void MovePiece(coords_t initial, coords_t target, piece_t (*boardState)[NUM_TILES]);
 
+void PromoteBox(Texture2D* dark_tile);
+
 #endif

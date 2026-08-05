@@ -1,6 +1,8 @@
 #include "boardRender.h"
 #include <raylib.h>
 #include "pieces.h"
+#include "gameInfo.h"
+#include "debug.h"
 
 void RookCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
 void BishopCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
@@ -145,4 +147,14 @@ void RookCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* d
 
 void BishopCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile){
 
+}
+
+void PromoteBox(Texture2D* dark_tile){
+    for (int i = 0; i < 4; i++){
+        for (int j = 0; j < 4; j++){
+            DrawTexture(*dark_tile, (WINDOW_H/4) + (i * TILE_SIZE), (WINDOW_V/4) + (j * TILE_SIZE), LIGHTGRAY);
+            //printc((coords_t){(WINDOW_H/4) + (i * TILE_SIZE), (WINDOW_V/4) + (j * TILE_SIZE)});
+        }
+    }
+    GotHere();
 }

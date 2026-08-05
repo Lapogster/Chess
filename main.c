@@ -3,15 +3,14 @@
 #include "boardRender.h"
 #include "playerLogic.h"
 #include "myMath.h"
+#include "gameInfo.h"
 
 #include <stdio.h>
-
-#define WINDOW_H 800
-#define WINDOW_V 800
 
 void InvalidateOldMoves(piece_t (*boardState)[NUM_TILES]);
 void NextTurn(colour_t *turn);
 void ClearEnPassant(piece_t (*boardState)[NUM_TILES]);
+void PromotePiece(coords_t tile, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
 
 int main(void){
 
@@ -70,6 +69,7 @@ int main(void){
 
         // Draw Board
         DrawBoard(&dark_tile);
+        DrawPieces(boardState, textures); // Moved for now
 
         frameInput = getPlayerInput(turn);
         currentTile = frameInput.currentTile;
@@ -100,6 +100,17 @@ int main(void){
 
                     MovePiece(lastClick, currentTile, boardState);
 
+                    if (turn == White){
+                        if ((currentTile.y == 0) && (boardState[currentTile.x][currentTile.y].type == Pawn)){
+                            PromotePiece(currentTile, boardState, &dark_tile);
+                        }
+                    }
+                    else if (turn == Black){
+                        if ((currentTile.y == 7) && (boardState[currentTile.x][currentTile.y].type == Pawn)){
+                            PromotePiece(currentTile, boardState, &dark_tile);
+                        }
+                    }
+
                     if (thisTurnEP){
                         if (boardState[currentTile.x][currentTile.y].colour == White){
                             boardState[currentTile.x][currentTile.y + 1].type = None;
@@ -118,7 +129,7 @@ int main(void){
             lastTile = currentTile;
         }
 
-        DrawPieces(boardState, textures);
+        //DrawPieces(boardState, textures);
 
         HighlightValidMoves(boardState[lastClick.x][lastClick.y], lastClick, boardState, &dark_tile);
 
@@ -170,3 +181,10 @@ void ClearEnPassant(piece_t (*boardState)[NUM_TILES]){
         }
     }
 }
+
+void PromotePiece(coords_t tile, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile){
+    //printf("Promoting at x:%d y%d\n", tile.x, tile.y);
+    PromoteBox(dark_tile);
+    EndDrawing();
+    while (TRUE);
+    }
