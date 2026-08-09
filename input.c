@@ -18,7 +18,7 @@ input_return_t getPlayerInput(colour_t turn){
     input_return_t input = {0};
     input.currentTile = currentTile;
 
-    if (((x >= 0 && x < NUM_TILES) && (y >= 0 && y < NUM_TILES)) && IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+    if (((x >= 0 && x < NUM_TILES) && (y >= 0 && y < NUM_TILES)) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
         input.click = TRUE;
     }
 

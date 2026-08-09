@@ -35,6 +35,27 @@ int main(void){
     Texture2D black_pawn = LoadTexture("assets/textures/Black_Pawn.png");
     textures[Pawn].whiteSprite = white_pawn;
     textures[Pawn].blackSprite = black_pawn;
+    Texture2D white_queen = LoadTexture("assets/textures/Queen_TempW.png");
+    Texture2D black_queen = LoadTexture("assets/textures/Queen_TempB.png");
+    textures[Queen].whiteSprite = white_queen;
+    textures[Queen].blackSprite = black_queen;
+    Texture2D white_rook = LoadTexture("assets/textures/Rook_TempW.png");
+    Texture2D black_rook = LoadTexture("assets/textures/Rook_TempB.png");
+    textures[Rook].whiteSprite = white_rook;
+    textures[Rook].blackSprite = black_rook;
+    Texture2D white_bishop = LoadTexture("assets/textures/Bishop_TempW.png");
+    Texture2D black_bishop = LoadTexture("assets/textures/Bishop_TempB.png");
+    textures[Bishop].whiteSprite = white_bishop;
+    textures[Bishop].blackSprite = black_bishop;
+    Texture2D white_knight = LoadTexture("assets/textures/Knight_TempW.png");
+    Texture2D black_knight = LoadTexture("assets/textures/Knight_TempB.png");
+    textures[Knight].whiteSprite = white_knight;
+    textures[Knight].blackSprite = black_knight;
+    Texture2D white_king = LoadTexture("assets/textures/King_TempW.png");
+    Texture2D black_king = LoadTexture("assets/textures/King_TempB.png");
+    textures[King].whiteSprite = white_king;
+    textures[King].blackSprite = black_king;
+
 
     // Spawning Board
     boardState[0][6] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
@@ -55,8 +76,26 @@ int main(void){
     boardState[6][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
     boardState[7][1] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
 
-    boardState[3][5] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
-    boardState[5][2] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+    //boardState[3][5] = (piece_t){Pawn, White, FALSE, FALSE, FALSE, FALSE};
+    //boardState[5][2] = (piece_t){Pawn, Black, FALSE, FALSE, FALSE, FALSE};
+
+    boardState[0][7] = (piece_t){Rook, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[1][7] = (piece_t){Knight, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[2][7] = (piece_t){Bishop, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[3][7] = (piece_t){Queen, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[4][7] = (piece_t){King, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[5][7] = (piece_t){Bishop, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[6][7] = (piece_t){Knight, White, FALSE, FALSE, FALSE, FALSE};
+    boardState[7][7] = (piece_t){Rook, White, FALSE, FALSE, FALSE, FALSE};
+
+    boardState[0][0] = (piece_t){Rook, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[1][0] = (piece_t){Knight, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[2][0] = (piece_t){Bishop, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[3][0] = (piece_t){Queen, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[4][0] = (piece_t){King, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[5][0] = (piece_t){Bishop, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[6][0] = (piece_t){Knight, Black, FALSE, FALSE, FALSE, FALSE};
+    boardState[7][0] = (piece_t){Rook, Black, FALSE, FALSE, FALSE, FALSE};
 
     int thisTurnEP = FALSE;
 
@@ -140,9 +179,13 @@ int main(void){
     }
 
     // Unloading Textures from Memory
-    UnloadTexture(dark_tile);
-    UnloadTexture(white_pawn);
-    UnloadTexture(black_pawn);
+    //UnloadTexture(dark_tile);
+    //UnloadTexture(white_pawn);
+    //UnloadTexture(black_pawn);
+    for (int t = 0; t < (NUM_PIECES + 1); t++){
+        UnloadTexture(textures[t].whiteSprite);
+        UnloadTexture(textures[t].blackSprite);
+    }
 
     // Close App
     CloseWindow();
@@ -187,4 +230,6 @@ void PromotePiece(coords_t tile, piece_t (*boardState)[NUM_TILES], Texture2D* da
     PromoteBox(dark_tile);
     EndDrawing();
     while (TRUE);
+    // Promote box loop
+    
     }

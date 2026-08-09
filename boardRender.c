@@ -4,8 +4,8 @@
 #include "gameInfo.h"
 #include "debug.h"
 
-void RookCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
-void BishopCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
+void RookCheck(piece_t piece, coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
+void BishopCheck(piece_t piece, coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile);
 
 void DrawBoard(Texture2D* dark_tile){
     for (int i = 0; i < NUM_TILES; i++){
@@ -100,28 +100,70 @@ void HighlightValidMoves(piece_t piece, coords_t location, piece_t (*boardState)
 
     // Rook Check
     if (piece.type == Rook){
-        RookCheck(location, boardState, dark_tile);
+        RookCheck(piece, location, boardState, dark_tile);
     }
 
     // Bishop Check
     if (piece.type == Bishop){
-        BishopCheck(location, boardState, dark_tile);
+        BishopCheck(piece, location, boardState, dark_tile);
     }
 
     // Knight Check
     if (piece.type == Knight){
-        
+        if (piece.colour == White){
+
+        }
+        else{
+
+        }
     }
 
     // Queen Check
     if (piece.type == Queen){
-        RookCheck(location, boardState, dark_tile);
-        BishopCheck(location, boardState, dark_tile);
+        RookCheck(piece, location, boardState, dark_tile);
+        BishopCheck(piece, location, boardState, dark_tile);
     }
 
     // King Check
     if (piece.type == King){
-        
+        if (piece.colour == White){
+            // Up
+            if (location.y > 0){
+                if (boardState[location.x][location.y - 1].type == None || boardState[location.x][location.y - 1].colour == Black){
+                    DrawTexture(*dark_tile, (location.x) * TILE_SIZE, TILE_SIZE * (location.y - 1), VALID);
+                    boardState[location.x][location.y - 1].valid = TRUE;
+                }
+                // Right
+                if (location.x > 0){
+                    if (boardState[location.x - 1][location.y - 1].type == None || boardState[location.x - 1][location.y - 1].colour == Black){
+                        DrawTexture(*dark_tile, (location.x - 1) * TILE_SIZE, TILE_SIZE * (location.y - 1), VALID);
+                        boardState[location.x - 1][location.y - 1].valid = TRUE;
+                    }
+                }
+                // Left
+                if (location.x < 7){
+                    if (boardState[location.x + 1][location.y - 1].type == None || boardState[location.x + 1][location.y - 1].colour == Black){
+                        DrawTexture(*dark_tile, (location.x + 1) * TILE_SIZE, TILE_SIZE * (location.y - 1), VALID);
+                        boardState[location.x + 1][location.y - 1].valid = TRUE;
+                    }
+                }
+            }
+            // Down
+            if (location.y < 7){
+
+            }
+            // Right
+            if (location.x > 0){
+
+            }
+            // Left
+            if (location.x < 7){
+
+            }
+        }
+        else{
+
+        }
     }
 }
 
@@ -141,12 +183,42 @@ void MovePiece(coords_t initial, coords_t target, piece_t (*boardState)[NUM_TILE
     boardState[initial.x][initial.y].type = None;
 }
 
-void RookCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile){
-
+void RookCheck(piece_t piece, coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile){
+    if (piece.colour == White){
+        // Up
+        if (location.y > 0){
+        }
+        // Down
+        if (location.y < 7){
+        }
+        // Right
+        if (location.x > 0){
+        }
+        // Left
+        if (location.x < 7){
+        }
+    }
+    else{
+    }
 }
 
-void BishopCheck(coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile){
-
+void BishopCheck(piece_t piece, coords_t location, piece_t (*boardState)[NUM_TILES], Texture2D* dark_tile){
+    if (piece.colour == White){
+        // Up
+        if (location.y > 0){
+        }
+        // Down
+        if (location.y < 7){
+        }
+        // Right
+        if (location.x > 0){
+        }
+        // Left
+        if (location.x < 7){
+        }
+    }
+    else{
+    }
 }
 
 void PromoteBox(Texture2D* dark_tile){
